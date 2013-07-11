@@ -1,0 +1,8 @@
+LIB = libplugincore
+FILES = pluginmanager pluggable_class_factory 
+
+DynamicCXXLibrary($(LIB), $(FILES))
+DynamicCXXLibraryCopy(all, ../$(TEST_DIR), $(LIB)) 
+
+.SUBDIRS: plugin1
+

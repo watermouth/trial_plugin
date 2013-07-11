@@ -1,0 +1,11 @@
+LIB = libplugin1
+FILES = plugin1 ../plugin_api
+
+CXXFLAGS += -fPIC
+ASFLAGS +=
+LDFLAGS += -L../ -lplugincore 
+
+$(DynamicCXXLibrary $(LIB), $(FILES)): ../libplugincore.dylib
+DynamicCXXLibraryCopy(all, ../../$(TEST_DIR), $(LIB))
+
+
