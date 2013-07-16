@@ -6,6 +6,5 @@ ASFLAGS +=
 LDFLAGS += -L../ -lplugincore 
 
 $(DynamicCXXLibrary $(LIB), $(FILES)): ../libplugincore.dylib
-DynamicCXXLibraryCopy(all, ../../$(TEST_DIR), $(LIB))
-
+#DynamicCXXLibraryCopy(all, ../../$(TEST_DIR) , $(LIB))
 
