@@ -1,9 +1,6 @@
-LIB = libplugincore
-FILES = pluginmanager pluggable_class_factory 
+PLUGIN_CORE_LIB = $(file libplugincore)
 
-all:
-  DynamicCXXLibrary($(LIB), $(FILES))
-  DynamicCXXLibraryCopy(all, ../$(TEST_DIR), $(LIB)) 
+CXXFLAGS += -fPIC
 
-.SUBDIRS: plugin1
+.SUBDIRS: plugin_core plugin1
 

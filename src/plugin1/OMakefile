@@ -1,10 +1,18 @@
 LIB = libplugin1
-FILES = plugin1 ../plugin_api
+FILES = plugin1 #$(removesuffix $(filter %.cpp, $(ls R, .)))
+echo plugin1 files are ":" $(FILES)
 
-CXXFLAGS += -fPIC
 ASFLAGS +=
-LDFLAGS += -L../ -lplugincore 
 
-$(DynamicCXXLibrary $(LIB), $(FILES)): ../libplugincore.dylib
-#DynamicCXXLibraryCopy(all, ../../$(TEST_DIR) , $(LIB))
+echo $(PLUGIN_CORE_LIB)$(EXT_DLL)
+echo $(file-exists $(PLUGIN_CORE_LIB)$(EXT_DLL))
+if $(file-exists $(PLUGIN_CORE_LIB)$(EXT_DLL))
+  section
+    LDFLAGS += -L../ -lplugincore 
+    g++ $(CXXFLAGS) $(addprefix -I, $(INCLUDES)) -o libplugin1.dylib plugin1.cpp $(LDFLAGS) -dynamiclib
+    #DynamicCXXLibrary($(LIB), $(FILES))
+    #DynamicCXXLibraryCopy(all, $(TEST_DIR) , $(LIB))
+
+clean:
+  rm -rf *.dylib *.o
 

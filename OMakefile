@@ -1,8 +1,9 @@
 # working directory for building gtestlib.a
-GTEST_BUILD_DIR = gtestBuild
-INCLUDE_DIR = include
-SRC_DIR = src
-TEST_DIR = test
+# comment out after you created $(GTEST_LIB)
+GTEST_BUILD_DIR = #gtestBuild
+INCLUDE_DIR = $(dir include)
+SRC_DIR = $(dir src)
+TEST_DIR = $(dir test)
 # variable which refers to libgtest.a
 GTEST_LIB = $(file $(TEST_DIR)/libgtest)
 
@@ -22,9 +23,10 @@ INCLUDES += $(dir $(INCLUDE_DIR) $(SRC_DIR))
 # Target Program
 #
 
-CXXFILES[] = $(removesuffix $(filter %.cpp, $(ls R, $(SRC_DIR))))
+# files in src diretory only.
+CXXFILES[] = $(removesuffix $(filter %.cpp, $(ls $(SRC_DIR))))
+echo CXXFILES are ":" $(CXXFILES)
 CXXProgram($(PROGRAM), $(CXXFILES))
-
 
 ########################################################################
 # Test Program
@@ -35,7 +37,7 @@ TEST_CXXFILES[] = $(filter-out %main, $(CXXFILES)) $(removesuffix $(filter %.cpp
 section
   CXXFLAGS += -pthread
   LIBS += $(GTEST_LIB)
-  echo $(TEST_CXXFILES)
+  echo TEST_CXXFILES are ":" $(TEST_CXXFILES)
   CXXProgram($(TEST_PROGRAM), $(TEST_CXXFILES))
 
 
