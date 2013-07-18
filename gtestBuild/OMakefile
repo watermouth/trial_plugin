@@ -1,15 +1,16 @@
-# unzipped original gtest directory
-GTEST_DIR = /Users/Dirac/Development/Cpp/gtest-1.6.0 
+# Building Google test library
+# build $(GTEST_LIB).a and remove other generated files
+
 GTEST_ROOT = $(dir $(GTEST_DIR))
 GTEST_INCLUDE_DIR = $(dir $(GTEST_DIR)/include)
 GTEST_SRC_DIR = $(dir $(GTEST_DIR)/src)
 
-INCLUDES += $(GTEST_ROOT) $(GTEST_INCLUDE_DIR)
+INCLUDES = $(GTEST_ROOT) $(GTEST_INCLUDE_DIR)
 
 SRC_FILE = gtest-all
 TARGET_SRC = $(file $(GTEST_SRC_DIR)/$(SRC_FILE).cc)
-GTEST_LIB = libgtest
-GTEST_INSTALL_LIB = ../test/$(GTEST_LIB)$(EXT_LIB)
+#GTEST_LIB = libgtest
+GTEST_INSTALL_LIB = $(file $(TEST_DIR)/$(GTEST_LIB)$(EXT_LIB))
 
 $(SRC_FILE)$(EXT_OBJ): $(TARGET_SRC) 
     section# this section keyword and the following lines indents are necessary to use IFILES variable. 
@@ -23,16 +24,12 @@ $(GTEST_LIB)$(EXT_LIB): $(SRC_FILE)$(EXT_OBJ)
   #ln -s $@ ../test/ # symbolic link cannot be found by file-exists.
 
 .DEFAULT: $(GTEST_LIB)$(EXT_LIB) 
-#  mv $(GTEST_LIB)$(EXT_LIB) ../test/
-#  echo $(GTEST_DIR)
-#  echo $(GTEST_ROOT)
-#  echo $(GTEST_INCLUDE_DIR)
-#  echo $(GTEST_SRC_DIR)
+  rm -f $< $(SRC_FILE)$(EXT_OBJ)
 
 clean:
   #echo $(GTEST_INSTALL_LIB) 
   #echo $(target-exists libgtest.a)
-  echo $(test -e $(GTEST_INSTALL_LIB)) 
+  #echo $(test -e $(GTEST_INSTALL_LIB)) 
   if $(file-exists $(GTEST_INSTALL_LIB)) 
     rm $(GTEST_INSTALL_LIB) 
   rm -rf $(filter-proper-targets $(ls R, .))

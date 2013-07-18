@@ -12,6 +12,7 @@ TEST(Main, GetAllPlugins){
   for(vector<PluginInstance*>::iterator it = plugins.begin();
     it != plugins.end(); ++it) {
     cout << (**it).GetFileName() << endl;
+    cout << "--- --- ---" << endl;
   } 
 }
 

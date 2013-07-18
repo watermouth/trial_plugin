@@ -1,6 +1,10 @@
 FILES = pluginmanager pluggable_class_factory plugin_api 
 echo plugin core files ":" $(FILES)
 
-DynamicCXXLibrary($(PLUGIN_CORE_LIB), $(FILES))
-DynamicCXXLibraryCopy(all, $(TEST_DIR), $(PLUGIN_CORE_LIB)) 
+.DEFAULT: $(DynamicCXXLibrary $(PLUGIN_CORE_LIB), $(FILES))
+  #cp $< $(DLL_LIB_DIR)
+
+clean:
+  rm -f $(DLL_LIB_DIR)/$(basename $(PLUGIN_CORE_LIB))$(EXT_DLL)
+
 

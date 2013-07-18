@@ -4,18 +4,18 @@ echo plugin1 files are ":" $(FILES)
 
 ASFLAGS +=
 
-echo $(PLUGIN_CORE_LIB)$(EXT_DLL)
-echo $(file-exists $(PLUGIN_CORE_LIB)$(EXT_DLL))
 if $(file-exists $(PLUGIN_CORE_LIB)$(EXT_DLL))
   section
-    LDFLAGS += -L../ -lplugincore 
+    LDFLAGS += -L$(DLL_LIB_DIR) -lplugincore 
     .DEFAULT: $(DynamicCXXLibrary $(LIB), $(FILES))
-      cp $< $(SRC_DIR)
-      cp $< $(TEST_DIR)
-    #DynamicCXXLibraryCopy(all, $(TEST_DIR) , $(LIB))
-    #$(DynamicCXXLibrary $(LIB), $(FILES)): $(PLUGIN_CORE_LIB)$(EXT_DLL)
-    #g++ $(CXXFLAGS) $(addprefix -I, $(INCLUDES)) -o libplugin1.dylib plugin1.cpp $(LDFLAGS) -dynamiclib
+      rm -f $(DLL_LIB_DIR)/$(LIB)$(EXT_DLL)
+      #rm -f $(SRC_DIR)/$(LIB)$(EXT_DLL)
+      cp $< $(DLL_LIB_DIR)
+      #cp $< $(SRC_DIR)
+      rm -f $<
 
 clean:
   rm -rf *.dylib *.o
+  rm -f $(DLL_LIB_DIR)/$(LIB)$(EXT_DLL)
+  rm -f $(SRC_DIR)/$(LIB)$(EXT_DLL)
 

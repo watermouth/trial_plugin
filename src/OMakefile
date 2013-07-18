@@ -1,4 +1,4 @@
-PLUGIN_CORE_LIB = $(file libplugincore)
+PLUGIN_CORE_LIB = $(file $(DLL_LIB_DIR)/libplugincore)
 
 CXXFLAGS += -fPIC
 

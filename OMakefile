@@ -1,11 +1,22 @@
-# working directory for building gtestlib.a
+# working directory for building libgtest.a
 # comment out after you created $(GTEST_LIB)
+# in order to compile quickly 
 GTEST_BUILD_DIR = #gtestBuild
+
+# unzipped original gtest directory
+GTEST_DIR = /Users/Dirac/Development/Cpp/gtest-1.6.0 
+
+# DLL_LIB_DIR must be added to DYLD_LIBRARY_PATH environment variable:
+# ex. on your shell,
+# export DYLD_LIBRARY_PATH=lib
+DLL_LIB_DIR = $(dir lib)
+
 INCLUDE_DIR = $(dir include)
 SRC_DIR = $(dir src)
 TEST_DIR = $(dir test)
+
 # variable which refers to libgtest.a
-GTEST_LIB = $(file $(TEST_DIR)/libgtest)
+GTEST_LIB = libgtest #$(file $(TEST_DIR)/libgtest)
 
 PROGRAM = main 
 TEST_PROGRAM = $(TEST_DIR)/unittest
@@ -16,7 +27,7 @@ ASFLAGS +=
 LDFLAGS +=
 INCLUDES += $(dir $(INCLUDE_DIR) $(SRC_DIR))
 
-.PHONY: all clean test gtestlib
+.PHONY: all clean test 
 
 
 ########################################################################
@@ -32,11 +43,12 @@ CXXProgram($(PROGRAM), $(CXXFILES))
 # Test Program
 #
 
-TEST_CXXFILES[] = $(filter-out %main, $(CXXFILES)) $(removesuffix $(filter %.cpp, $(ls R, $(TEST_DIR))))
+TEST_CXXFILES[] = $(filter-out %main, $(CXXFILES)) $(removesuffix $(filter %.cpp, $(ls R, $(TEST_DIR)))) 
 
 section
   CXXFLAGS += -pthread
-  LIBS += $(GTEST_LIB)
+  LIBS += $(TEST_DIR)/$(GTEST_LIB)
+  LDFLAGS += -L$(DLL_LIB_DIR) -lplugincore
   echo TEST_CXXFILES are ":" $(TEST_CXXFILES)
   CXXProgram($(TEST_PROGRAM), $(TEST_CXXFILES))
 
